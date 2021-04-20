@@ -11,7 +11,60 @@ library(tigerstats)
 library(tidyverse)
 ```
 
+Read about the data from the website where it is staged.  Then form three regression models; Model1 is SIMS~ARM, Model2 is SIMS~GRIP, and Model3 is SIMS~ARM+GRIP. For each model find a 95% prediction interval of SIMS given a value of 94  for GRIP and 88 for ARM. Compare Model1 with Model3 using anova. Write it up in a markdown document, push the project up to your github account and submit it back to canvas as link. 
+
+
+
 ```{r}
 data <- read.csv(file="https://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt",sep="",header=TRUE)  
 ```
+
+###Plot scatterplot
+
+```{r}
+plot(SIMS~ARM,data=data)
+```
+
+##Now with ggplot - first select the basic data
+
+```{r}
+basicNN <- ggplot(data,aes(y=SIMS,x=ARM))
+```
+##Now add in scatterplot
+
+```{r}
+basicNN + geom_point()+ geom_smooth(method=lm)
+```
+  
+
+```{r}
+model1= lm(SIMS~ARM,data=data)
+summary(model1)
+```
+The adjusted R-Squared for this model is 0.467.  
+
+###Plot scatterplot
+
+```{r}
+plot(SIMS~GRIP,data=data)
+```
+
+##Now with ggplot - first select the basic data
+
+```{r}
+basicNN <- ggplot(data,aes(y=SIMS,x=GRIP))
+```
+##Now add in scatterplot
+
+```{r}
+basicNN + geom_point()+ geom_smooth(method=lm)
+```
+  
+
+
+```{r}
+model2= lm(SIMS~GRIP,data=data)
+summary(model2)
+```
+The adjusted R-Squared for model number #2 is 0.4053 which is smaller than model number #1.    
 
