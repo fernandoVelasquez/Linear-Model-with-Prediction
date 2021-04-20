@@ -2,7 +2,9 @@
 title: "Linear Model with Prediction"
 author: "Fernando D Velasquez"
 date: "4/19/2021"
-output: html_document
+output:
+    html_document:
+        toc: true
 ---
 
 ```{r setup, include=FALSE}
@@ -19,59 +21,67 @@ Read about the data from the website where it is staged.  Then form three regres
 data <- read.csv(file="https://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt",sep="",header=TRUE)  
 ```
 
-###Plot scatterplot
+# Model 1  
+
+### Plot scatterplot
 
 ```{r}
 plot(SIMS~ARM,data=data)
 ```
 
-##Now with ggplot - first select the basic data
+### Now with ggplot - first select the basic data
 
 ```{r}
 basicNN <- ggplot(data,aes(y=SIMS,x=ARM))
 ```
-##Now add in scatterplot
+### Now add in scatterplot
 
 ```{r}
 basicNN + geom_point()+ geom_smooth(method=lm)
 ```
-  
+
 
 ```{r}
 model1= lm(SIMS~ARM,data=data)
 summary(model1)
 ```
+
 The adjusted R-Squared for this model is 0.467 and the Residual standard error is 1.226
 
+### Prediction 1
 ```{r}
 newdata= data.frame(GRIP=94, ARM=88)
 predict(model1,newdata,interval="prediction")
 ```
 
+# Model 2
 
-###Plot scatterplot
+### Plot scatterplot
 
 ```{r}
 plot(SIMS~GRIP,data=data)
 ```
 
-##Now with ggplot - first select the basic data
+### Now with ggplot - first select the basic data
 
 ```{r}
 basicNN <- ggplot(data,aes(y=SIMS,x=GRIP))
 ```
-##Now add in scatterplot
+### Now add in scatterplot
 
 ```{r}
 basicNN + geom_point()+ geom_smooth(method=lm)
 ```
   
-
+  
+Equation of the line is SIMS= -4.9 + 0.04 *GRIP. The scatter plot shows a positive relation between SIMS and GRIP.  
 
 ```{r}
 model2= lm(SIMS~GRIP,data=data)
 summary(model2)
 ```
+
+### Prediction 2
 
 ```{r}
 predict(model2,newdata,interval="prediction")
@@ -79,14 +89,24 @@ predict(model2,newdata,interval="prediction")
 
 The adjusted R-Squared for model number #2 is 0.4053 which is smaller than model number #1. The Residual standard error is 1.295 which is bigger than model 1.  
 
-# Inferential  (Build linear model)
+# Model 3 
+
+### Inferential  (Build linear model)
   
 ```{r}
 model3 <- lm(SIMS~ARM + GRIP,data=data)
 summary.lm(model3)
 ```
-  
+
+
+### Prediction 3
 ```{r}
 predict(model3,newdata,interval="prediction")
+```
+
+# COMPARE THE MODELS 
+
+```{r}
+anova(model1,model3)
 ```
 
