@@ -40,6 +40,9 @@ basicNN <- ggplot(data,aes(y=SIMS,x=ARM))
 basicNN + geom_point()+ geom_smooth(method=lm)
 ```
 
+  
+Equation for the line is SIMS= -4.1 + 0.05*ARM. The scatter plot shows a positive relation between ARM and SIMS. 
+
 
 ```{r}
 model1= lm(SIMS~ARM,data=data)
@@ -109,4 +112,4 @@ predict(model3,newdata,interval="prediction")
 ```{r}
 anova(model1,model3)
 ```
-
+The anova compares model 1 and 3 as well the null hypothesis shows that their is no difference to predict SIMS. The alternative hypothesis says that their is a difference. The difference to predict SIMS is due to no chance as the p value is too small. Both the standard deviation and adjusted R squared indicated that model 3 (ARM+Grip) is the best model as the prediction is 0.15 and the 95% confidence interval is -2.1 to 2.4.
