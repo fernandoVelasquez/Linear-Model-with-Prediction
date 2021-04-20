@@ -41,7 +41,13 @@ basicNN + geom_point()+ geom_smooth(method=lm)
 model1= lm(SIMS~ARM,data=data)
 summary(model1)
 ```
-The adjusted R-Squared for this model is 0.467.  
+The adjusted R-Squared for this model is 0.467 and the Residual standard error is 1.226
+
+```{r}
+newdata= data.frame(GRIP=94, ARM=88)
+predict(model1,newdata,interval="prediction")
+```
+
 
 ###Plot scatterplot
 
@@ -66,5 +72,21 @@ basicNN + geom_point()+ geom_smooth(method=lm)
 model2= lm(SIMS~GRIP,data=data)
 summary(model2)
 ```
-The adjusted R-Squared for model number #2 is 0.4053 which is smaller than model number #1.    
+
+```{r}
+predict(model2,newdata,interval="prediction")
+```
+
+The adjusted R-Squared for model number #2 is 0.4053 which is smaller than model number #1. The Residual standard error is 1.295 which is bigger than model 1.  
+
+# Inferential  (Build linear model)
+  
+```{r}
+model3 <- lm(SIMS~ARM + GRIP,data=data)
+summary.lm(model3)
+```
+  
+```{r}
+predict(model3,newdata,interval="prediction")
+```
 
